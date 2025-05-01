@@ -1,8 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   HostBinding,
   input,
+  output,
+  viewChild,
 } from '@angular/core';
 
 @Component({
@@ -18,6 +21,9 @@ import {
   },
 })
 export class CalculatorButtonComponent {
+  onClick = output<string>();
+  contentValue = viewChild<ElementRef<HTMLButtonElement>>('button');
+
   isCommand = input(false, {
     transform: (value: boolean | string) =>
       typeof value === 'string' ? value === '' : value,
@@ -26,7 +32,7 @@ export class CalculatorButtonComponent {
   isDoubleSize = input(false, {
     transform: (value: boolean | string) =>
       typeof value === 'string' ? value === '' : value,
-  })
+  });
 
   @HostBinding('class.bg-indigo-700') get commandStyle() {
     return this.isCommand();
@@ -35,5 +41,13 @@ export class CalculatorButtonComponent {
   @HostBinding('class.w-2/4') get doubleSizeStyle() {
     return this.isDoubleSize();
   }
+
+  handelClick() {
+    if (!this.contentValue()?.nativeElement) return;
+    // this.contentValue()?.nativeElement.innerText = 'clicked';
+    const value = this.contentValue()?.nativeElement.innerText;
+    this.onClick.emit(value?.trim()!);
+  }
+
 
 }
