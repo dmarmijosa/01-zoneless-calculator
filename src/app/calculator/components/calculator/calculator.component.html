@@ -12,7 +12,7 @@
   @for (row of buttonRows; track $index) {
   <div class="flex w-full">
     @for (button of row; track $index) {
-    <calculator-button
+    <calculator-button #calculatorButton
       [isCommand]="button.isCommand"
       [isDoubleSize]="button.isDoubleSize"
       (onClick)="handleClick($event)"
