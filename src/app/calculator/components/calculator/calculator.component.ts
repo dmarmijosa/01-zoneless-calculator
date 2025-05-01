@@ -23,7 +23,7 @@ export class CalculatorComponent {
   calculatorService = inject(CalculatorService);
 
   resultText = computed(() => {
-    return this.calculatorService.resultTest();
+    return this.calculatorService.resultText();
   });
   subResultText = computed(() => {
     return this.calculatorService.subResultText();
@@ -36,7 +36,8 @@ export class CalculatorComponent {
     viewChildren<CalculatorButtonComponent>('calculatorButton');
 
   handleClick(key: string) {
-    console.log({ key });
+    console.log(key)
+    this.calculatorService.constructNumber(key);
   }
 
   //@HostListener('document:keyup', ['$event'])
@@ -45,11 +46,10 @@ export class CalculatorComponent {
 
     const ketEquivalent: Record<string, string> = {
       Escape: 'C',
-      ' ': 'C',
-      Backspace: 'C',
-      Enter: '=',
-      '*': 'x',
+      Clear: 'C',
+      x: '*',
       '/': '÷',
+      Enter: '=',
     };
     const key = event.key;
 
